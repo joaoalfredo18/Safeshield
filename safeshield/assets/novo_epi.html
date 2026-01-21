@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeShield - Novo EPI</title>
+    
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <aside class="barra-lateral">
+        <div class="area-logo">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>SafeShield</span>
+        </div>
+        <nav class="links-navegacao">
+            <a href="./index.html" class="item-navegacao">
+                <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+            </a>
+            <a href="./estoque.html" class="item-navegacao ativo">
+                <i class="fa-solid fa-box-archive"></i> <span>Estoque</span>
+            </a>
+             </nav>
+    </aside>
+
+    <main class="conteudo-principal">
+        
+        <a href="estoque.html" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--texto-cinza); margin-bottom: 20px; font-weight: 500; width: fit-content;">
+            <i class="fa-solid fa-arrow-left"></i> Voltar para Estoque
+        </a>
+
+        <div class="container-formulario">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 style="font-size: 24px; color: var(--texto-escuro);">Cadastrar Novo EPI</h2>
+                <p style="color: var(--texto-cinza);">Preencha todos os campos obrigatórios (*)</p>
+            </div>
+
+            <form id="form-epi"> 
+                <div class="grid-formulario">
+                    
+                    <div class="grupo-input largura-total">
+                        <label>Nome do Equipamento *</label>
+                        <input type="text" name="nome" class="campo-input" placeholder="Ex: Capacete de Segurança" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Número CA *</label>
+                        <input type="text" name="ca" class="campo-input" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Número do Lote *</label>
+                        <input type="text" name="lote" class="campo-input" placeholder="Ex: LOTE-2024-A" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Quantidade *</label>
+                        <input type="number" name="quantidade" class="campo-input" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Preço Unitário (R$) *</label>
+                        <input type="number" step="0.01" name="preco_unitario" class="campo-input" placeholder="0.00" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Data Aquisição *</label>
+                        <input type="date" name="data_aquisicao_lote" class="campo-input" required>
+                    </div>
+
+                    <div class="grupo-input">
+                        <label>Data Validade (Lote) *</label>
+                        <input type="date" name="data_validade_lote" class="campo-input" required>
+                    </div>
+                    
+                    <div class="grupo-input largura-total">
+                        <label>Fornecedor *</label>
+                        <input type="text" name="fornecedor" class="campo-input" required>
+                    </div>
+
+                    <div class="grupo-input largura-total">
+                        <label>Descrição / Categoria *</label>
+                        <textarea name="descricao" class="campo-input" rows="3" placeholder="Detalhes técnicos ou categoria..." style="height: auto; padding-top:10px;"></textarea>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="botao-novo" style="width: 100%; justify-content: center; margin-top: 30px; height: 50px; font-size: 16px; background-color: #1f1f1f; color: white; border: none; cursor: pointer;">
+                    Salvar no Estoque
+                </button>
+
+            </form>
+        </div>
+
+    </main>
+
+    <script src="./js/app_estoque.js"></script>
+
+    <div id="custom-modal" class="modal-overlay-custom">
+    <div class="modal-box">
+        <h3 id="modal-titulo" class="modal-titulo">SafeShield</h3>
+        <p id="modal-mensagem" class="modal-mensagem">Mensagem do sistema...</p>
+        
+        <input type="text" id="modal-input" class="modal-input" placeholder="Digite aqui...">
+        
+        <div class="modal-botoes">
+            <button id="btn-cancelar" class="btn-modal btn-cancelar">Cancelar</button>
+            <button id="btn-confirmar" class="btn-modal btn-confirmar">OK</button>
+        </div>
+    </div>
+</div>
+
+<script src="./js/modal_sistema.js"></script>
+</body>
+</html>

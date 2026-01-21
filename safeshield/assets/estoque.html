@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeShield - Estoque de EPIs</title>
+    
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <aside class="barra-lateral">
+        <div class="area-logo">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>SafeShield</span>
+        </div>
+        <nav class="links-navegacao">
+            <a href="./index.html" class="item-navegacao">
+                <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+            </a>
+    
+            <a href="./estoque.html" class="item-navegacao ativo">
+                <i class="fa-solid fa-box-archive"></i> <span>Estoque</span>
+            </a>
+
+            <a href="./solicitacoes.html" class="item-navegacao">
+                <i class="fa-solid fa-clipboard-list"></i> <span>Solicitações</span>
+            </a>
+            <a href="./funcionarios.html" class="item-navegacao">
+                <i class="fa-solid fa-users"></i> <span>Funcionários</span>
+            </a>
+            <a href="./relatorios.html" class="item-navegacao">
+                <i class="fa-solid fa-file-lines"></i> <span>Relatórios</span>
+            </a>
+</nav>
+    </aside>
+
+    <main class="conteudo-principal">
+        
+        <div class="titulo-pagina">
+            <div>
+                <h1>Inventário de EPIs</h1>
+                <p style="font-size: 14px; color: var(--texto-cinza); margin-top: 5px;"> Gerencie o estoque, validade e CAs dos equipamentos.</p>
+            </div>
+            <a href="novo_epi.html" class="nobo_epi">
+                <i class="fa-solid fa-plus"></i> Novo EPI
+            </a>
+        </div>
+
+        <div class="barra-ferramentas">
+            <div class="grupo-pesquisa">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" class="input-pesquisa" placeholder="Buscar por nome, CA ou categoria...">
+            </div>
+            
+            <button class="btn-filtro">
+                <i class="fa-solid fa-filter"></i> Filtrar
+            </button>
+        </div>
+
+        <div class="container-formulario" style="max-width: 100%; padding: 0; overflow: hidden;">
+        <table class="tabela-limpa">
+            <thead style="background-color: #f8f9fa; border-bottom: 2px solid #eee;">
+            <tr>
+                <th style="padding: 20px;">Produto / EPI</th>
+                <th>CA</th>
+                <th>Descrição/Categoria</th> <th>Quantidade</th>
+                <th>Validade Lote</th>
+                <th>Status</th>
+                <th style="text-align: right; padding-right: 20px;">Ações</th>
+            </tr>
+            </thead>
+        
+            <tbody id="tabela-estoque">
+            </tbody>
+        </table>
+            </div>
+
+        </main>
+        <script src="./js/app_estoque.js"></script>
+
+    <div id="custom-modal" class="modal-overlay-custom">
+        <div class="modal-box">
+            <h3 id="modal-titulo" class="modal-titulo">SafeShield</h3>
+            <p id="modal-mensagem" class="modal-mensagem">Mensagem do sistema...</p>
+        
+            <input type="text" id="modal-input" class="modal-input" placeholder="Digite aqui...">
+        
+            <div class="modal-botoes">
+                <button id="btn-cancelar" class="btn-modal btn-cancelar">Cancelar</button>
+                <button id="btn-confirmar" class="btn-modal btn-confirmar">OK</button>
+            </div>
+        </div>
+    </div>
+    <script src="./js/modal_sistema.js"></script>
+    
+    </body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeShield - Dashboard</title>
+    
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <aside class="barra-lateral">
+        <div class="area-logo">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>SafeShield</span>
+        </div>
+        <nav class="links-navegacao">
+            <a href="index.html" class="item-navegacao ativo">
+                <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+            </a>
+            <a href="estoque.html" class="item-navegacao">
+                <i class="fa-solid fa-box-archive"></i> <span>Estoque</span>
+            </a>
+            <a href="solicitacoes.html" class="item-navegacao">
+                <i class="fa-solid fa-clipboard-list"></i> <span>Solicitações</span>
+            </a>
+            <a href="funcionarios.html" class="item-navegacao">
+                <i class="fa-solid fa-users"></i> <span>Funcionários</span>
+            </a>
+            <a href="relatorios.html" class="item-navegacao">
+                <i class="fa-solid fa-file-lines"></i> <span>Relatórios</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="conteudo-principal">
+        
+        <div class="titulo-pagina">
+            <h1>Visão Geral</h1>
+            <a href="cadastrar.html" class="botao-novo">
+                <i class="fa-solid fa-plus"></i> Cadastrar Usuário
+            </a>
+        </div>
+
+        <div class="grid-status">
+            <div class="cartao-status">
+                <div>
+                    <div class="titulo-status">Solicitações Entregues</div>
+                    <div class="valor-status" id="kpi-entregues">0</div>
+                </div>
+                <div><span class="etiqueta bg-verde"><i class="fa-solid fa-arrow-trend-up"></i> Total</span></div>
+            </div>
+
+            <div class="cartao-status">
+                <div>
+                    <div class="titulo-status">EPIs com Estoque Baixo</div>
+                    <div class="valor-status" style="color: #ea8600;" id="kpi-baixo">0</div>
+                </div>
+                <div><span class="etiqueta bg-laranja"><i class="fa-solid fa-triangle-exclamation"></i> Reposição</span></div>
+            </div>
+
+            <div class="cartao-status">
+                <div>
+                    <div class="titulo-status">Vencimento Próximo</div>
+                    <div class="valor-status" style="color: #c5221f;" id="kpi-vencimento">0</div>
+                </div>
+                <div><span class="etiqueta bg-vermelho"><i class="fa-regular fa-calendar-xmark"></i> Atenção</span></div>
+            </div>
+        </div>
+
+        <div class="secao-central">
+            
+            <div class="caixa-grafico">
+                <h3 style="margin-bottom: 5px; font-size: 16px; color: var(--texto-escuro);">Aquisições de EPIs</h3>
+                <p style="font-size: 12px; color: var(--texto-cinza); margin-bottom: 20px;">Quantidade de itens comprados por mês</p>
+                
+                <div style="height: 250px; width: 100%;">
+                    <canvas id="meuGraficoEPI"></canvas>
+                </div>
+            </div>
+
+            <div class="caixa-grafico">
+                <h3 style="margin-bottom: 20px; font-size: 16px; color: var(--texto-escuro);">
+                    Solicitações Pendentes
+                </h3>
+                
+                <ul class="lista-pendente" id="lista-pendentes" style="display: flex; flex-direction: column; gap: 10px;">
+                    <li style="text-align:center; color: #999;">Carregando...</li>
+                </ul>
+                
+                <div style="margin-top: 20px; text-align: center;">
+                    <a href="solicitacoes.html" style="text-decoration: none; color: var(--azul-primario); font-size: 13px; font-weight: 600;">Ver todas as solicitações →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="secao-central" style="grid-template-columns: 1fr;"> 
+            <div class="caixa-grafico">
+                <h3 style="margin-bottom: 15px; font-size: 16px; color: var(--texto-escuro);">EPIs Mais Solicitados</h3>
+                <table class="tabela-limpa">
+                    <thead>
+                        <tr>
+                            <th>Nome do EPI</th>
+                            <th>Total de Pedidos</th>
+                            <th>Status Estoque</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-top-epis">
+                        <tr><td colspan="3">Carregando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+    
+    <script src="./js/dashboard.js"></script>
+    <div id="custom-modal" class="modal-overlay-custom">
+        <div class="modal-box">
+            <h3 id="modal-titulo" class="modal-titulo">SafeShield</h3>
+            <p id="modal-mensagem" class="modal-mensagem">Mensagem do sistema...</p>
+        
+            <input type="text" id="modal-input" class="modal-input" placeholder="Digite aqui...">
+        
+            <div class="modal-botoes">
+                <button id="btn-cancelar" class="btn-modal btn-cancelar">Cancelar</button>
+                <button id="btn-confirmar" class="btn-modal btn-confirmar">OK</button>
+            </div>
+        </div>
+    </div>
+    <script src="./js/modal_sistema.js"></script>
+</body>
+</html>

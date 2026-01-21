@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeShield - Portal do Colaborador</title>
+    
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- RESET E BASE --- */
+        body {
+            background-color: #f3f4f6; /* Cinza levemente mais moderno */
+            font-family: 'Inter', sans-serif; /* Fonte mais corporativa */
+            color: #1f2937;
+            display: block;
+            overflow-y: auto;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- HEADER --- */
+        .header-usuario {
+            background: #ffffff;
+            height: 70px;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .brand-area {
+            display: flex; 
+            align-items: center; 
+            gap: 12px;
+        }
+
+        .user-selector-area {
+            display: flex; 
+            align-items: center; 
+            gap: 15px;
+            background: #f9fafb;
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .select-user-top {
+            border: none;
+            background: transparent;
+            font-weight: 500;
+            color: #374151;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+            min-width: 200px;
+        }
+
+        /* --- CONTAINER PRINCIPAL --- */
+        .container-usuario {
+            max-width: 1000px; /* Largura um pouco maior para respiro */
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        /* --- KPI CARDS (DASHBOARD) --- */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .card-kpi-user {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid #f3f4f6;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.2s;
+        }
+
+        .card-kpi-user:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .kpi-info h3 {
+            font-size: 14px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .kpi-numero { 
+            font-size: 36px; 
+            font-weight: 700; 
+            color: var(--azul-primario);
+            line-height: 1;
+        }
+
+        .kpi-legenda { 
+            font-size: 13px; 
+            color: #9ca3af; 
+            margin-top: 4px;
+        }
+
+        .kpi-icon-bg {
+            width: 56px;
+            height: 56px;
+            background: var(--azul-hover);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--azul-primario);
+        }
+
+        /* --- ABAS (TABS) --- */
+        .tabs { 
+            display: flex; 
+            gap: 10px; 
+            margin-bottom: 24px; 
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 1px;
+        }
+        
+        .tab-btn {
+            padding: 12px 24px;
+            background: transparent; 
+            border: none;
+            font-size: 15px; 
+            font-weight: 500; 
+            color: #6b7280;
+            cursor: pointer; 
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .tab-btn:hover {
+            color: var(--azul-primario);
+            background: #f9fafb;
+        }
+
+        .tab-btn.ativo { 
+            color: var(--azul-primario); 
+            border-bottom-color: var(--azul-primario); 
+            font-weight: 600;
+        }
+        
+        .tab-content { display: none; }
+        .tab-content.ativo { display: block; animation: fadeIn 0.4s ease-out; }
+
+        /* --- FORMULÁRIOS --- */
+        .container-formulario-moderno {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            padding: 32px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .form-header { margin-bottom: 24px; }
+        .form-header h3 { font-size: 18px; color: #111827; margin-bottom: 8px; }
+        .form-header p { font-size: 14px; color: #6b7280; }
+
+        .grupo-input { margin-bottom: 20px; }
+        
+        .grupo-input label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .campo-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #1f2937;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #f9fafb;
+        }
+
+        .campo-input:focus {
+            background: white;
+            border-color: var(--azul-primario);
+            box-shadow: 0 0 0 3px var(--azul-hover);
+            outline: none;
+        }
+
+        textarea.campo-input {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .botao-submit {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--azul-primario);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(13, 71, 161, 0.2);
+        }
+
+        .botao-submit:hover {
+            background-color: #08367d; /* Azul um pouco mais escuro */
+            transform: translateY(-1px);
+        }
+
+        /* --- LISTA DE EPIs (CARD SIMPLES) --- */
+        /* Estilização dos itens gerados pelo JS */
+        .card-simples {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .card-simples:hover {
+            border-color: #b0c4de;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .icone-epi {
+            width: 48px !important; 
+            height: 48px !important; 
+            background: #eff6ff !important; 
+            color: var(--azul-primario) !important; 
+            border-radius: 10px !important;
+            font-size: 20px;
+        }
+
+        .btn-devolver {
+            background: white;
+            color: #374151;
+            border: 1px solid #d1d5db;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-devolver:hover {
+            background: #fef2f2;
+            color: #dc2626; /* Vermelho ao hover */
+            border-color: #fca5a5;
+        }
+
+        /* --- EMPTY STATE (Mensagem de boas-vindas) --- */
+        #aviso-selecao {
+            text-align: center;
+            margin-top: 80px;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px dashed #d1d5db;
+        }
+
+        #aviso-selecao h2 { color: #111827; margin-bottom: 10px; }
+        #aviso-selecao p { color: #6b7280; font-size: 16px; }
+        .welcome-icon { font-size: 48px; color: #d1d5db; margin-bottom: 20px; }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .header-usuario { padding: 15px 20px; flex-direction: column; height: auto; gap: 15px; }
+            .kpi-row { grid-template-columns: 1fr; }
+            .card-simples { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .btn-devolver { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-usuario">
+        <div class="brand-area">
+            <i class="fa-solid fa-shield-halved" style="color: var(--azul-primario); font-size: 28px;"></i>
+            <span style="font-weight: 700; font-size: 20px; color: #1f2937; letter-spacing: -0.5px;">SafeShield</span>
+        </div>
+
+        <div class="user-selector-area">
+            <i class="fa-solid fa-user-circle" style="color: #9ca3af; font-size: 18px;"></i>
+            <select id="select-usuario-atual" class="select-user-top">
+                <option value="">Selecione um Funcionário...</option>
+            </select>
+            <i class="fa-solid fa-chevron-down" style="font-size: 12px; color: #6b7280; margin-left: 5px;"></i>
+        </div>
+    </header>
+
+    <div class="container-usuario">
+        
+        <div id="aviso-selecao">
+            <div class="welcome-icon"><i class="fa-solid fa-id-card-clip"></i></div>
+            <h2>Portal do Colaborador</h2>
+            <p>Identifique-se no menu superior para gerenciar seus equipamentos de proteção.</p>
+        </div>
+
+        <div id="painel-conteudo" style="display: none;">
+            
+            <div class="kpi-row">
+                <div class="card-kpi-user">
+                    <div class="kpi-info">
+                        <h3>Minhas Solicitações</h3>
+                        <div class="kpi-numero" id="kpi-total">0</div>
+                        <p class="kpi-legenda">Histórico total de pedidos</p>
+                    </div>
+                    <div class="kpi-icon-bg">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                </div>
+                <div class="card-kpi-user">
+                    <div class="kpi-info">
+                        <h3>Devoluções</h3>
+                        <div class="kpi-numero" id="kpi-devolvidos" style="color: #059669;">0</div>
+                        <p class="kpi-legenda">Itens retornados ao estoque</p>
+                    </div>
+                    <div class="kpi-icon-bg" style="background-color: #ecfdf5; color: #059669;">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn ativo" data-target="tab-pedir">
+                    <i class="fa-solid fa-plus-circle" style="margin-right: 6px;"></i> Nova Solicitação
+                </button>
+                <button class="tab-btn" data-target="tab-meus">
+                    <i class="fa-solid fa-helmet-safety" style="margin-right: 6px;"></i> Meus EPIs Ativos
+                </button>
+            </div>
+
+            <div id="tab-pedir" class="tab-content ativo">
+                <div class="container-formulario-moderno">
+                    <div class="form-header">
+                        <h3>Solicitar Novo Equipamento</h3>
+                        <p>Preencha os dados abaixo para abrir um chamado no almoxarifado.</p>
+                    </div>
+                    
+                    <form id="form-pedir-epi">
+                        <div class="grupo-input">
+                            <label><i class="fa-solid fa-layer-group" style="margin-right: 5px; color: var(--azul-primario);"></i> Selecione o EPI</label>
+                            <div style="position: relative;">
+                                <select id="select-epi" class="campo-input" required></select>
+                                <i class="fa-solid fa-chevron-down" style="position: absolute; right: 15px; top: 15px; color: #9ca3af; pointer-events: none;"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="grupo-input">
+                            <label><i class="fa-solid fa-pen" style="margin-right: 5px; color: var(--azul-primario);"></i> Justificativa do Pedido</label>
+                            <textarea id="motivo-pedido" class="campo-input" placeholder="Descreva brevemente o motivo (ex: Desgaste natural, perda, item danificado)..."></textarea>
+                        </div>
+
+                        <button type="submit" class="botao-submit">
+                            Confirmar Solicitação <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="tab-meus" class="tab-content">
+                <div class="container-formulario-moderno" style="padding-bottom: 10px;">
+                    <div class="form-header" style="border-bottom: 1px solid #f3f4f6; padding-bottom: 15px; margin-bottom: 20px;">
+                        <h3>Equipamentos em sua posse</h3>
+                        <p><i class="fa-solid fa-circle-info" style="color: var(--azul-primario);"></i> Estes são os itens registrados sob sua responsabilidade atualmente.</p>
+                    </div>
+
+                    <div id="lista-meus-epis">
+                        </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="./js/app_usuario.js"></script>
+    
+    <div id="custom-modal" class="modal-overlay-custom">
+        <div class="modal-box">
+            <div style="margin-bottom: 15px;">
+                <i class="fa-solid fa-shield-halved" style="font-size: 32px; color: var(--azul-primario);"></i>
+            </div>
+            <h3 id="modal-titulo" class="modal-titulo">SafeShield</h3>
+            <p id="modal-mensagem" class="modal-mensagem">Mensagem do sistema...</p>
+            
+            <input type="text" id="modal-input" class="modal-input" placeholder="Digite aqui...">
+            
+            <div class="modal-botoes">
+                <button id="btn-cancelar" class="btn-modal btn-cancelar">Cancelar</button>
+                <button id="btn-confirmar" class="btn-modal btn-confirmar">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/modal_sistema.js"></script>
+</body>
+</html>
